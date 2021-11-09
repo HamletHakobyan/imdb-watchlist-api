@@ -14,7 +14,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Space.ImdbWatchList.Infrastructure;
+using Space.ImdbWatchList.Models.Settings;
+using Space.ImdbWatchList.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Space.ImdbWatchList.Api
@@ -31,8 +35,10 @@ namespace Space.ImdbWatchList.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ImdbSettings>(Configuration.GetSection(ImdbSettings.SectionName));
 
             services.AddControllers();
+
             services.AddApiVersioning(options =>
             {
                 options.DefaultApiVersion = ApiVersion.Parse("1");
@@ -64,6 +70,12 @@ namespace Space.ImdbWatchList.Api
                         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                     }
                 });
+
+            services.AddHttpClient<IImdbService, ImdbService>((provider, client) =>
+            {
+                var imdbSettings = provider.GetRequiredService<IOptions<ImdbSettings>>().Value;
+                client.BaseAddress = new Uri(imdbSettings.Host);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

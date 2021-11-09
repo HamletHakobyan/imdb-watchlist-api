@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Services\Space.ImdbWatchList.Services.csproj" />
   </ItemGroup>
 
 </Project>

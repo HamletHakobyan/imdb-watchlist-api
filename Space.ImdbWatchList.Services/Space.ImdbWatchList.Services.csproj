@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.extensions.options" Version="6.0.0" />
+    <PackageReference Include="newtonsoft.json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>
