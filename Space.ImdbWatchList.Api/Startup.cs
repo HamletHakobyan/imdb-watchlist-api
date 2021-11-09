@@ -8,8 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Space.ImdbWatchList.Api
 {
@@ -27,10 +33,41 @@ namespace Space.ImdbWatchList.Api
         {
 
             services.AddControllers();
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = ApiVersion.Parse("1");
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+            });
+
+            services.AddVersionedApiExplorer(
+                options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+                    options.SubstituteApiVersionInUrl = true;
+                });
+
+            services.AddSwaggerGen();
+            services.AddOptions<SwaggerGenOptions>()
+                .Configure<IApiVersionDescriptionProvider>((options, provider) =>
+                {
+                    foreach (var apiVersionDescription in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerDoc(apiVersionDescription.GroupName, new OpenApiInfo
+                        {
+                            Title = "IMDB watchlist API",
+                            Description = "Space IMDB WatchList Server",
+                            Version = apiVersionDescription.ApiVersion.ToString(),
+                        });
+
+                        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                    }
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -46,6 +83,19 @@ namespace Space.ImdbWatchList.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                foreach (var apiVersionDescription in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint(
+                        $"/swagger/{apiVersionDescription.GroupName}/swagger.json",
+                        apiVersionDescription.GroupName.ToUpperInvariant()
+                    );
+                }
+
             });
         }
     }
