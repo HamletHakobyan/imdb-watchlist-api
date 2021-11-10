@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  space.imdbwatchlist.api:
+    image: ${DOCKER_REGISTRY-}spaceimdbwatchlistapi
+    build:
+      context: .
+      dockerfile: Space.ImdbWatchList.Api/Dockerfile
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: space-mssql
+    environment:
+      SA_PASSWORD: "SecureP@ssw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+    - "1433:1433"
