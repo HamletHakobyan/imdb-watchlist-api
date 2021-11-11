@@ -3,9 +3,13 @@ version: '3.4'
 services:
   space.imdbwatchlist.api:
     image: ${DOCKER_REGISTRY-}spaceimdbwatchlistapi
+    container_name: spaceimdbwatchlistapi
     build:
       context: .
-      dockerfile: Space.ImdbWatchList.Api/Dockerfile
+      dockerfile: Space.ImdbWatchList.api/Dockerfile
+    depends_on:
+    - migrations
+    - db
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: space-mssql
@@ -14,3 +18,11 @@ services:
       ACCEPT_EULA: "Y"
     ports:
     - "1433:1433"
+    depends_on:
+    - migrations
+  migrations:
+    image: ${DOCKER_REGISTRY-}migrations
+    container_name: migrations
+    build:
+      context: .
+      dockerfile: Space.ImdbWatchList.api/Migrations.Dockerfile

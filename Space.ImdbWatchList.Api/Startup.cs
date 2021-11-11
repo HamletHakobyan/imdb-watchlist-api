@@ -14,10 +14,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Space.ImdbWatchList.ClientServices;
+using Space.ImdbWatchList.Common;
+using Space.ImdbWatchList.Data;
 using Space.ImdbWatchList.Infrastructure;
-using Space.ImdbWatchList.Models.Settings;
 using Space.ImdbWatchList.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -71,11 +74,20 @@ namespace Space.ImdbWatchList.Api
                     }
                 });
 
-            services.AddHttpClient<IImdbService, ImdbService>((provider, client) =>
+            services.AddHttpClient<IImdbClientService, ImdbClientService>((provider, client) =>
             {
                 var imdbSettings = provider.GetRequiredService<IOptions<ImdbSettings>>().Value;
                 client.BaseAddress = new Uri(imdbSettings.Host);
             });
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFilmService, FilmService>();
+            services.AddTransient<IWatchListService, WatchListService>();
+
+            services.AddDbContext<ImdbWatchListDbContext>(
+                builder => builder.UseSqlServer(Configuration.GetConnectionString("mssqlConnectionString")));
+
+            services.AddTransient<UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

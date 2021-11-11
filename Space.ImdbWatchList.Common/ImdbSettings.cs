@@ -1,4 +1,6 @@
-﻿namespace Space.ImdbWatchList.Models.Settings
+﻿using System;
+
+namespace Space.ImdbWatchList.Common
 {
     public class ImdbSettings
     {

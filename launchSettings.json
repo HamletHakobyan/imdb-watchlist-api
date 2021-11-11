@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "db": "StartWithoutDebugging",
+        "migrations": "StartWithoutDebugging",
+        "space.imdbwatchlist.api": "StartWithoutDebugging"
+      }
+    }
+  }
+}

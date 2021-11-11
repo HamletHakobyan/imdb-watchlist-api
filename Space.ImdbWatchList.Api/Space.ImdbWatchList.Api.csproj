@@ -14,13 +14,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.versioning.apiexplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Space.ImdbWatchList.ClientServices\Space.ImdbWatchList.ClientServices.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Common\Space.ImdbWatchList.Common.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Data\Space.ImdbWatchList.Data.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj" />
-    <ProjectReference Include="..\Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Services\Space.ImdbWatchList.Services.csproj" />
   </ItemGroup>
 

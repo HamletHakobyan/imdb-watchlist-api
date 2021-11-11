@@ -5,13 +5,26 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Api", "Space.ImdbWatchList.Api\Space.ImdbWatchList.Api.csproj", "{F790342E-E78E-47DD-A84F-B4726780BD08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Models", "Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj", "{8F8AC179-AF6D-4DEE-B549-41F43624D6F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Models", "Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj", "{8F8AC179-AF6D-4DEE-B549-41F43624D6F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Infrastructure", "Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj", "{2D623454-6E2A-4C0B-B3EC-E7F0EA6C8E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Infrastructure", "Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj", "{2D623454-6E2A-4C0B-B3EC-E7F0EA6C8E06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Services", "Space.ImdbWatchList.Services\Space.ImdbWatchList.Services.csproj", "{FAEB66AE-CC75-49DD-B51C-D1935D6AE930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Services", "Space.ImdbWatchList.Services\Space.ImdbWatchList.Services.csproj", "{FAEB66AE-CC75-49DD-B51C-D1935D6AE930}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB0A0004-C2D4-408C-B4D5-2151D339465F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Data", "Space.ImdbWatchList.Data\Space.ImdbWatchList.Data.csproj", "{59790945-7F9F-489F-A384-78C632DB59BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{92BA35C6-4325-4587-9112-15C87008AF4D}"
+	ProjectSection(SolutionItems) = preProject
+		migrate.sh = migrate.sh
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Dto", "Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj", "{8E456008-AE04-4C74-AF34-6498C8434650}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Common", "Space.ImdbWatchList.Common\Space.ImdbWatchList.Common.csproj", "{029339AB-1F06-4DC4-B22D-20982A867F9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.ClientServices", "Space.ImdbWatchList.ClientServices\Space.ImdbWatchList.ClientServices.csproj", "{10C850CD-11AA-483F-95F9-F397B8C3C18A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +52,22 @@ Global
 		{EB0A0004-C2D4-408C-B4D5-2151D339465F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB0A0004-C2D4-408C-B4D5-2151D339465F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB0A0004-C2D4-408C-B4D5-2151D339465F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59790945-7F9F-489F-A384-78C632DB59BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59790945-7F9F-489F-A384-78C632DB59BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59790945-7F9F-489F-A384-78C632DB59BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59790945-7F9F-489F-A384-78C632DB59BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E456008-AE04-4C74-AF34-6498C8434650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E456008-AE04-4C74-AF34-6498C8434650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E456008-AE04-4C74-AF34-6498C8434650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E456008-AE04-4C74-AF34-6498C8434650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029339AB-1F06-4DC4-B22D-20982A867F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029339AB-1F06-4DC4-B22D-20982A867F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029339AB-1F06-4DC4-B22D-20982A867F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029339AB-1F06-4DC4-B22D-20982A867F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

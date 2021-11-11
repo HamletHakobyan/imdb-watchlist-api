@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Collections.Generic;
 
-namespace Space.ImdbWatchList.Models.ViewModel
+namespace Space.ImdbWatchList.Models.ResponseModel
 {
     public class SearchResponseVm
     {

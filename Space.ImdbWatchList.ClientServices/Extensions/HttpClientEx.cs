@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net.Http;
-using Newtonsoft.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace Space.ImdbWatchList.Services
+namespace Space.ImdbWatchList.ClientServices.Extensions
 {
     public static class NewtonsoftHttpClientExtensions
     {
@@ -17,7 +17,7 @@ namespace Space.ImdbWatchList.Services
 
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync(cancellationToken);
 
             return JsonConvert.DeserializeObject<T>(json, settings);
         }

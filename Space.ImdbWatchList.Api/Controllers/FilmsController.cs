@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Space.ImdbWatchList.Dto;
 using Space.ImdbWatchList.Infrastructure;
-using Space.ImdbWatchList.Models;
-using Space.ImdbWatchList.Models.ViewModel;
 
 namespace Space.ImdbWatchList.Api.Controllers
 {
@@ -17,11 +17,13 @@ namespace Space.ImdbWatchList.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class FilmsController : ControllerBase
     {
-        private readonly IImdbService _imdbService;
+        private readonly IFilmService _filmService;
+        private readonly ILogger<FilmsController> _logger;
 
-        public FilmsController(IImdbService imdbService)
+        public FilmsController(IFilmService filmService, ILogger<FilmsController> logger)
         {
-            _imdbService = imdbService;
+            _filmService = filmService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -30,20 +32,23 @@ namespace Space.ImdbWatchList.Api.Controllers
         [HttpGet("{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<FilmVm>>> SearchFilmsAsync(string name, CancellationToken ct)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<FilmDto>>> SearchFilmsAsync(string name, CancellationToken ct)
         {
             try
             {
-                var films = await _imdbService.SearchFilmsAsync(name, ct);
-                if (!films.Any())
+                var films = await _filmService.SearchFilmsAsync(name, ct);
+                if (films.Any())
                 {
-                    return NotFound(name);
+                    return films;
                 }
 
-                return films;
+                _logger.LogInformation($"Search film by name {name} returns no element.");
+                return NotFound(name);
             }
             catch (Exception e)
             {
+                _logger.LogError(e, $"Unhandled exception in {nameof(IFilmService.SearchFilmsAsync)}");
                 return Problem(detail: e.Message);
             }
         }

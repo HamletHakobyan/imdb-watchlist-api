@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Space.ImdbWatchList.Models.ViewModel
+namespace Space.ImdbWatchList.Models.ResponseModel
 {
     public class SearchResultVm
     {
