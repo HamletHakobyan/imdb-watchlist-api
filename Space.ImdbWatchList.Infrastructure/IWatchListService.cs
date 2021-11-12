@@ -7,7 +7,9 @@ namespace Space.ImdbWatchList.Infrastructure
 {
     public interface IWatchListService
     {
-        Task<List<WatchListDto>> GetWatchlistItemsByUserIdAsync(int id, CancellationToken ct);
-        Task MarkFilmAsWatchedAsync(int id, string filmId, CancellationToken ct);
+        Task<List<WatchListDto>> GetWatchlistItemsByUserIdAsync(int id, CancellationToken ct = default);
+        Task MarkFilmAsWatchedAsync(int id, string filmId, CancellationToken ct = default);
+        Task<List<OfferDataDto>> GetEmailOfferDataAsync(CancellationToken ct = default);
+        Task SetOfferedDateAsync(List<(int userId, string filmId)> watchListItems);
     }
 }

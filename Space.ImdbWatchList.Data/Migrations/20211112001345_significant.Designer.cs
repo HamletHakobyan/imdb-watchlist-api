@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Space.ImdbWatchList.Data;
 
 namespace Space.ImdbWatchList.Data.Migrations
 {
     [DbContext(typeof(ImdbWatchListDbContext))]
-    partial class ImdbWatchListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211112001345_significant")]
+    partial class significant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,7 @@ namespace Space.ImdbWatchList.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<decimal?>("Rating")
+                    b.Property<decimal>("Rating")
                         .HasPrecision(3, 1)
                         .HasColumnType("decimal(3,1)");
 
@@ -35,7 +37,8 @@ namespace Space.ImdbWatchList.Data.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("WikiDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("Id");
 
@@ -97,12 +100,6 @@ namespace Space.ImdbWatchList.Data.Migrations
                             Id = 1,
                             Email = "hamlet.h.hakobyan@gmail.com",
                             Name = "Hamlet"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "aleq.hakobyan@gmail.com",
-                            Name = "Aleq"
                         });
                 });
 

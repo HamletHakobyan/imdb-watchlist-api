@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Space.ImdbWatchList.Data.Entities;
 
@@ -18,9 +19,16 @@ namespace Space.ImdbWatchList.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ImdbWatchListDbContext).Assembly);
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.LogTo(Console.WriteLine);
+        }
+
         public DbSet<Film> Films { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<WatchList> WatchLists { get; set; }
+        public DbSet<Poster> Posters { get; set; }
 
     }
 }

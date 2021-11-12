@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,9 @@ namespace Space.ImdbWatchList.Services
             _imdbClientService = imdbClientService;
             _logger = logger;
         }
-        public async Task AddFilmToWatchListAsync(int userId, string filmId, CancellationToken ct = default)
+        public async Task AddFilmToWatchListAsync(int userId, string filmId, CancellationToken ct)
         {
-            var user = await _unitOfWork.Users.GetUserByIdAsync(userId, ct);
+            var user = await _unitOfWork.Users.GetUserByIdAsync(userId, ct).ConfigureAwait(false);
             if (user == null)
             {
                 throw new UserNotFoundException($"User with given Id = {userId} doesn't exists.");
@@ -32,22 +33,22 @@ namespace Space.ImdbWatchList.Services
 
             try
             {
-                var filmVm = await _unitOfWork.Films.GetByIdAsync(filmId, ct);
+                var filmVm = await _unitOfWork.Films.GetByIdAsync(filmId, ct).ConfigureAwait(false);
                 string newFilmId;
 
                 if (filmVm == null)
                 {
-                    var fullTitle = await _imdbClientService.GetFullTitleById(filmId, ct);
-                    newFilmId = await _unitOfWork.Films.AddFilmAsync(fullTitle, ct);
+                    var fullTitle = await _imdbClientService.GetFullTitleById(filmId, ct).ConfigureAwait(false);
+                    newFilmId = await _unitOfWork.Films.AddFilmAsync(fullTitle, ct).ConfigureAwait(false);
                 }
                 else
                 {
                     newFilmId = filmVm.Id;
                 }
 
-                await _unitOfWork.WatchLists.AddFilmToWatchListAsync(userId, newFilmId, ct);
+                await _unitOfWork.WatchLists.AddFilmToWatchListAsync(userId, newFilmId, ct).ConfigureAwait(false);
                 
-                await _unitOfWork.CompleteAsync(ct);
+                await _unitOfWork.CompleteAsync(ct).ConfigureAwait(false);
             }
             catch(DbUpdateConcurrencyException ex)
             {
@@ -58,6 +59,11 @@ namespace Space.ImdbWatchList.Services
 
 
 
+        }
+
+        public async Task<List<UserVm>> GetUsersAsync(CancellationToken ct)
+        {
+            return await _unitOfWork.Users.GetAllAsync(ct).ConfigureAwait(false);
         }
     }
 }

@@ -20,11 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{92BA35
 		migrate.sh = migrate.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Dto", "Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj", "{8E456008-AE04-4C74-AF34-6498C8434650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Dto", "Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj", "{8E456008-AE04-4C74-AF34-6498C8434650}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.Common", "Space.ImdbWatchList.Common\Space.ImdbWatchList.Common.csproj", "{029339AB-1F06-4DC4-B22D-20982A867F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.Common", "Space.ImdbWatchList.Common\Space.ImdbWatchList.Common.csproj", "{029339AB-1F06-4DC4-B22D-20982A867F9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.ClientServices", "Space.ImdbWatchList.ClientServices\Space.ImdbWatchList.ClientServices.csproj", "{10C850CD-11AA-483F-95F9-F397B8C3C18A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space.ImdbWatchList.ClientServices", "Space.ImdbWatchList.ClientServices\Space.ImdbWatchList.ClientServices.csproj", "{10C850CD-11AA-483F-95F9-F397B8C3C18A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space.ImdbWatchList.RecurringJobs", "Space.ImdbWatchList.RecurringJobs\Space.ImdbWatchList.RecurringJobs.csproj", "{68F212BC-F761-409A-84AF-522C9154B509}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10C850CD-11AA-483F-95F9-F397B8C3C18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68F212BC-F761-409A-84AF-522C9154B509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68F212BC-F761-409A-84AF-522C9154B509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68F212BC-F761-409A-84AF-522C9154B509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68F212BC-F761-409A-84AF-522C9154B509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

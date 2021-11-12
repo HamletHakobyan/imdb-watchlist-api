@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Space.ImdbWatchList.Models.ViewModel;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace Space.ImdbWatchList.Data.Repositories
 
         public async Task<UserVm> GetUserByIdAsync(int id, CancellationToken ct = default)
         {
-            var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync(ct);
+            var user = await _context.Users.Where(u => u.Id == id).SingleOrDefaultAsync(ct).ConfigureAwait(false);
             if (user == null)
             {
                 return null;
@@ -29,6 +31,16 @@ namespace Space.ImdbWatchList.Data.Repositories
                 Name = user.Name,
                 Email = user.Email
             };
+        }
+
+        public async Task<List<UserVm>> GetAllAsync(CancellationToken ct)
+        {
+            return await _context.Users.Select(u => new UserVm
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email,
+            }).ToListAsync(ct).ConfigureAwait(false);
         }
     }
 }

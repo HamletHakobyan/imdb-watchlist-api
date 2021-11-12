@@ -5,7 +5,7 @@ using Space.ImdbWatchList.Data.Repositories;
 
 namespace Space.ImdbWatchList.Data
 {
-    public class UnitOfWork : IAsyncDisposable
+    public class UnitOfWork : IAsyncDisposable, IDisposable
     {
         private readonly ImdbWatchListDbContext _context;
 
@@ -21,11 +21,16 @@ namespace Space.ImdbWatchList.Data
         public FilmRepository Films { get; }
         public WatchListRepository WatchLists { get; }
 
-        public Task<int> CompleteAsync(CancellationToken ct) => _context.SaveChangesAsync(ct);
+        public Task<int> CompleteAsync(CancellationToken ct = default) => _context.SaveChangesAsync(ct);
 
         public ValueTask DisposeAsync()
         {
             return _context.DisposeAsync();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

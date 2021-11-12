@@ -20,7 +20,7 @@ namespace Space.ImdbWatchList.Services
         }
         public async Task<List<FilmDto>> SearchFilmsAsync(string name, CancellationToken ct = default)
         {
-            var filmVms = await _imdbClientService.SearchFilmsAsync(name, ct);
+            var filmVms = await _imdbClientService.SearchFilmsAsync(name, ct).ConfigureAwait(false);
             return filmVms.Select(fm => new FilmDto
             {
                 Id = fm.Id,

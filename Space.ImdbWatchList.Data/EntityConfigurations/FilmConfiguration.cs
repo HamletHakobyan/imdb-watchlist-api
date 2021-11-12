@@ -20,9 +20,6 @@ namespace Space.ImdbWatchList.Data
             builder.Property(f => f.Title)
                 .HasMaxLength(255)
                 .IsRequired();
-
-            builder.Property(f => f.WikiDescription)
-                .HasMaxLength(2000);
         }
     }
 }

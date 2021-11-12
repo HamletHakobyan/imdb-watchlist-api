@@ -18,7 +18,7 @@ namespace Space.ImdbWatchList.Data.Repositories
 
         public async Task<string> AddFilmAsync(FilmFullVm filmFullVm, CancellationToken ct)
         {
-            var film = await _dbContext.Films.FindAsync(new [] {filmFullVm.Id}, ct);
+            var film = await _dbContext.Films.FindAsync(new [] {filmFullVm.Id}, ct).ConfigureAwait(false);
             if (film != null)
             {
                 return film.Id;
@@ -33,7 +33,7 @@ namespace Space.ImdbWatchList.Data.Repositories
                 WikiDescription = filmFullVm.WikipediaInfo.PlotShort.PlainText,
             };
 
-            var filmEntry = await _dbContext.AddAsync(film, ct);
+            var filmEntry = await _dbContext.AddAsync(film, ct).ConfigureAwait(false);
 
             return filmEntry.Entity.Id;
 
@@ -53,7 +53,11 @@ namespace Space.ImdbWatchList.Data.Repositories
 
         public async Task<FilmVm> GetByIdAsync(string filmId, CancellationToken ct)
         {
-            var film = await _dbContext.Films.FindAsync(new[] { filmId }, ct);
+            var film = await _dbContext.Films.FindAsync(new[] { filmId }, ct).ConfigureAwait(false);
+            if (film == null)
+            {
+                return null;
+            }
             return new FilmVm
             {
                 Id = film.Id,

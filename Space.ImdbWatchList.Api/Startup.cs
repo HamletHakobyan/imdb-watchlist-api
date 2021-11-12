@@ -12,15 +12,19 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Space.ImdbWatchList.Api.Extensions;
 using Space.ImdbWatchList.ClientServices;
 using Space.ImdbWatchList.Common;
 using Space.ImdbWatchList.Data;
 using Space.ImdbWatchList.Infrastructure;
+using Space.ImdbWatchList.RecurringJobs;
 using Space.ImdbWatchList.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -39,6 +43,7 @@ namespace Space.ImdbWatchList.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ImdbSettings>(Configuration.GetSection(ImdbSettings.SectionName));
+            services.Configure<EmailSenderSettings>(Configuration.GetSection(EmailSenderSettings.SectionName));
 
             services.AddControllers();
 
@@ -84,19 +89,44 @@ namespace Space.ImdbWatchList.Api
             services.AddTransient<IFilmService, FilmService>();
             services.AddTransient<IWatchListService, WatchListService>();
 
+            services.AddSingleton<IEmailService, EmailService>();
+
             services.AddDbContext<ImdbWatchListDbContext>(
-                builder => builder.UseSqlServer(Configuration.GetConnectionString("mssqlConnectionString")));
+                builder => builder.UseSqlServer(Configuration.GetConnectionString("MssqlConnectionString")));
 
             services.AddTransient<UnitOfWork>();
+
+            services.AddHangfire(configuration => configuration
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(
+                    Configuration.GetConnectionString("HangfireConnectionString"),
+                    new SqlServerStorageOptions
+                    {
+                        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                        QueuePollInterval = TimeSpan.Zero,
+                        UseRecommendedIsolationLevel = true,
+                        DisableGlobalLocks = true
+                    }));
+            services.AddHangfireServer();
+            services.RegisterRecurringJobImplementations();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IConfiguration configuration,
+            IEnumerable<IRecurringJob> recurringJobs,
+            IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            configuration.RegisterAndConfigureRecurringJobs(recurringJobs);
 
             app.UseHttpsRedirection();
 
@@ -104,9 +134,12 @@ namespace Space.ImdbWatchList.Api
 
             app.UseAuthorization();
 
+            app.UseHangfireDashboard();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
 
             app.UseSwagger();
@@ -119,7 +152,6 @@ namespace Space.ImdbWatchList.Api
                         apiVersionDescription.GroupName.ToUpperInvariant()
                     );
                 }
-
             });
         }
     }

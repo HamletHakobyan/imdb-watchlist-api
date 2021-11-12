@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Space.ImdbWatchList.Common\Space.ImdbWatchList.Common.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Models\Space.ImdbWatchList.Models.csproj" />
   </ItemGroup>

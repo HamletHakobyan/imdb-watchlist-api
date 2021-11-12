@@ -57,7 +57,7 @@ namespace Space.ImdbWatchList.ClientServices
             return new RatingVm
             {
                 FilmId = ratingResponseVm.IMDbId,
-                ImdbRating = decimal.Parse(ratingResponseVm.IMDb, CultureInfo.InvariantCulture),
+                ImdbRating = decimal.TryParse(ratingResponseVm.IMDb, NumberStyles.Number, CultureInfo.InvariantCulture, out var val) ? val : null,
             };
         }
 
@@ -76,7 +76,7 @@ namespace Space.ImdbWatchList.ClientServices
             {
                 Id = fullTitleResp.Id,
                 Title = fullTitleResp.Title,
-                Rating = decimal.Parse(fullTitleResp.Ratings.IMDb, CultureInfo.InvariantCulture),
+                Rating = decimal.TryParse(fullTitleResp.Ratings.IMDb, NumberStyles.Number, CultureInfo.InvariantCulture, out var val) ? val : null,
                 Posters = fullTitleResp.Posters,
                 WikipediaInfo = fullTitleResp.Wikipedia,
             };

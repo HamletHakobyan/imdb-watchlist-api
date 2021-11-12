@@ -8,11 +8,13 @@ namespace Space.ImdbWatchList.Data
     {
         public void Configure(EntityTypeBuilder<WatchList> builder)
         {
-
+            builder.HasIndex(wl => wl.UserId);
+            builder.HasIndex(wl => wl.FilmId);
             builder.HasKey(wl => new { wl.UserId, wl.FilmId });
 
             builder.Property(wl => wl.FilmId)
                 .HasMaxLength(10);
+
             builder.Property(wl => wl.Added)
                 .HasDefaultValueSql("getutcdate()");
 

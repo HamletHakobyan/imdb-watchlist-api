@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Space.ImdbWatchList.Data;
@@ -21,7 +22,8 @@ namespace Space.ImdbWatchList.Services
 
         public async Task<List<WatchListDto>> GetWatchlistItemsByUserIdAsync(int id, CancellationToken ct)
         {
-            var watchListVms = await _unitOfWork.WatchLists.GetWatchListItemsByUserIdAsync(id, ct);
+            var watchListVms =
+                await _unitOfWork.WatchLists.GetWatchListItemsByUserIdAsync(id, ct).ConfigureAwait(false);
 
             return watchListVms.Select(WatchListVmToDto).ToList();
 
@@ -50,8 +52,36 @@ namespace Space.ImdbWatchList.Services
 
         public async Task MarkFilmAsWatchedAsync(int id, string filmId, CancellationToken ct)
         {
-            await _unitOfWork.WatchLists.MarkFilmAsWatchedById(id, filmId, ct);
-            await _unitOfWork.CompleteAsync(ct);
+            await _unitOfWork.WatchLists.MarkFilmAsWatchedById(id, filmId, ct).ConfigureAwait(false);
+            await _unitOfWork.CompleteAsync(ct).ConfigureAwait(false);
+        }
+
+        public async Task<List<OfferDataDto>> GetEmailOfferDataAsync(CancellationToken ct)
+        {
+            var offerDataVms = await _unitOfWork.WatchLists.GetUnwatchedGroupedByUserAsync(ct).ConfigureAwait(false);
+            return offerDataVms.Select(od =>
+
+                new OfferDataDto
+                {
+                    FilmId = od.Film.Id,
+                    UserId = od.User.Id,
+                    UserName = od.User.Name,
+                    Email = od.User.Email,
+                    Rating = od.Film.Rating,
+                    Title = od.Film.Title,
+                    Poster = od.Film.Posters.OrderByDescending(p => p.Height * p.Width).Select(p => new PosterDto
+                    {
+                        Id = p.Id,
+                        Link = p.Link,
+                    }).FirstOrDefault(),
+                    WikiShortDesc = od.Film.WikiShortDesc,
+                }).ToList();
+        }
+
+        public async Task SetOfferedDateAsync(List<(int userId, string filmId)> watchListItems)
+        {
+            await _unitOfWork.WatchLists.SetItemOfferedInWatchListAsync(watchListItems);
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

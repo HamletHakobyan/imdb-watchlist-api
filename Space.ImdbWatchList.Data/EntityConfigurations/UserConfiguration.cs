@@ -22,6 +22,12 @@ namespace Space.ImdbWatchList.Data
                         Id = 1,
                         Name = "Hamlet",
                         Email = "hamlet.h.hakobyan@gmail.com",
+                    },
+                    new User
+                    {
+                        Id = 2,
+                        Name = "Aleq",
+                        Email = "aleq.hakobyan@gmail.com",
                     });
         }
     }

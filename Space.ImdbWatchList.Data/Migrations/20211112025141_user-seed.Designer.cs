@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Space.ImdbWatchList.Data;
 
 namespace Space.ImdbWatchList.Data.Migrations
 {
     [DbContext(typeof(ImdbWatchListDbContext))]
-    partial class ImdbWatchListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211112025141_user-seed")]
+    partial class userseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,8 @@ namespace Space.ImdbWatchList.Data.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("WikiDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("Id");
 

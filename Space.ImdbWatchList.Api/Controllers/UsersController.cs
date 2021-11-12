@@ -38,7 +38,7 @@ namespace Space.ImdbWatchList.Api.Controllers
         {
             try
             {
-                return await _watchListService.GetWatchlistItemsByUserIdAsync(id, ct);
+                return await _watchListService.GetWatchlistItemsByUserIdAsync(id, ct).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace Space.ImdbWatchList.Api.Controllers
         {
             try
             {
-                await _userService.AddFilmToWatchListAsync(id, filmId, ct);
+                await _userService.AddFilmToWatchListAsync(id, filmId, ct).ConfigureAwait(false);
             }
             catch (UserNotFoundException ex)
             {
@@ -94,7 +94,7 @@ namespace Space.ImdbWatchList.Api.Controllers
         {
             try
             {
-                await _watchListService.MarkFilmAsWatchedAsync(id, filmId, ct);
+                await _watchListService.MarkFilmAsWatchedAsync(id, filmId, ct).ConfigureAwait(false);
             }
             catch (NoSuchItemException ex)
             {

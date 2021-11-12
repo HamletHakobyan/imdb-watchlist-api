@@ -37,7 +37,7 @@ namespace Space.ImdbWatchList.Api.Controllers
         {
             try
             {
-                var films = await _filmService.SearchFilmsAsync(name, ct);
+                var films = await _filmService.SearchFilmsAsync(name, ct).ConfigureAwait(false);
                 if (films.Any())
                 {
                     return films;

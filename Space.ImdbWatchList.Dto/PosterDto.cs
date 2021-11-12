@@ -1,6 +1,6 @@
-﻿namespace Space.ImdbWatchList.Models.ViewModel
+﻿namespace Space.ImdbWatchList.Dto
 {
-    public class PosterVm
+    public class PosterDto
     {
         public string Id { get; set; }
         public string Link { get; set; }

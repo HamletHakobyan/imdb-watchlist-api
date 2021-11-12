@@ -12,6 +12,9 @@
 	</PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.27" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.27" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.27" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.versioning.apiexplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0">
@@ -28,7 +31,12 @@
     <ProjectReference Include="..\Space.ImdbWatchList.Data\Space.ImdbWatchList.Data.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Dto\Space.ImdbWatchList.Dto.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Infrastructure\Space.ImdbWatchList.Infrastructure.csproj" />
+    <ProjectReference Include="..\Space.ImdbWatchList.RecurringJobs\Space.ImdbWatchList.RecurringJobs.csproj" />
     <ProjectReference Include="..\Space.ImdbWatchList.Services\Space.ImdbWatchList.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
